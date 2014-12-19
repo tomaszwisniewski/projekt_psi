@@ -1,0 +1,69 @@
+<div class="show">
+<div class="col-md-7">
+
+                <div class="thumbnail">
+                    <%= image_tag @order.image_url.to_s if @order.image? %>
+                    <div class="caption-full">
+                        <h4 class="pull-right"><%= number_to_currency(@order.price) %></h4>
+                        <h4><%= link_to @order.name, "#" %></a>
+                        </h4>
+                        <p><%= @order.description %></p>
+                    </div>
+                    <div class="ratings">
+                        <p class="pull-right">3 reviews</p>
+                        <p>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                            4.0 stars
+                        </p>
+                    </div>
+                </div>
+                <p><%= link_to 'Edit', edit_order_path(@order) if can? :update, @order %>
+                   <%= link_to 'Destroy', @order, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, @order%></p>
+
+                <p>
+                    <%= link_to category_path(@order.category), :class => 'btn btn-default' do %>
+                    <span class="glyphicon glyphicon-share-alt"></span>
+                    Back
+                  <% end %>
+                </p>
+                  <!--  <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@order.latitude}%2C#{@order.longitude}" %> -->
+
+            <% unless @order.user == current_user %>
+                <div class="row">
+                </br>
+                </br>
+                    <hr>
+                    <h3>Ask the question</h3>
+                    <%= form_tag({controller: "orders", action: "send_question"}, method: "post", class: "form") do %>
+                        <%= hidden_field(:order, :id)%> 
+                       <div class="form-group col-xs-4">
+                            <%= label_tag(:email, "Your email address:") %>
+                            <%= email_field_tag(:email, nil, class: "form-control") %>
+                        </div>
+                        <div class="form-group col-xs-9">
+                            <%= label_tag(:question, "Question:") %>
+                            <%= text_area_tag(:question, nil, class: "form-control", rows: "5") %>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <%= submit_tag("Send", class: "btn btn-primary") %>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+
+</div>
+</div>
+
+
+
+
+
+
+
+

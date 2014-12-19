@@ -1,0 +1,30 @@
+<div class="col-md-7 ">
+     
+     <h3><i class="glyphicon glyphicon-th"></i> Notes</h3>
+      
+      <hr>
+           <div class="row">
+                  <% @orders.each do |order| %>
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <%= link_to (image_tag order.image_url(:home)), order if order.image?%>
+                            <div class="caption">
+                                <h4 class="pull-right">$<%= order.price %></h4>
+                                <h4><%= link_to order.name, order %></h4>
+                                <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+                            </div>
+                            <div class="ratings">
+                                <p class="pull-right">15 reviews</p>
+                                <p>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                  <% end %>
+          </div> <!-- .row end -->
+</div>

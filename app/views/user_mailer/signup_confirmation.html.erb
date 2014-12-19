@@ -1,0 +1,5 @@
+<p>Hi <%= @user.nick %>, </p>
+
+<p>Thank you for signing up. Pleas click this link below.</p>
+
+<p><%= link_to "Confirm!", confirm_user_url(@user.auth_token) %></p>

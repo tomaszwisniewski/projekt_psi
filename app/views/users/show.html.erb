@@ -1,0 +1,47 @@
+
+  <div class="col-md-7 ">
+     
+     <% if current_user.is_admin? %>
+          <h3><span class="glyphicon glyphicon-dashboard"></span>
+                                    Admin panel</h3>
+
+
+              <div class="btn-group btn-group-justified">
+                <%= link_to categories_path, class: "btn btn-primary col-sm-4" do %>
+                 <span class="glyphicon glyphicon-list"></span></br>
+                  Categories
+                <% end %>
+                <%= link_to orders_path, class: "btn btn-primary col-sm-4" do %>
+                 <span class="glyphicon glyphicon-th"></span></br>
+                  Notes
+                <% end %>
+                <%= link_to users_path, class: "btn btn-primary col-sm-4" do %>
+                 <span class="glyphicon glyphicon-user"></span></br>
+                  Users
+                <% end %>
+                <%= link_to states_path, class: "btn btn-primary col-sm-4" do %>
+                 <span class="glyphicon glyphicon-globe"></span></br>
+                  States
+                <% end %>
+              </div>
+        
+      <% else %>
+          <h3><i class="glyphicon glyphicon-home"></i> My account</h3>
+      <% end %>
+      <hr>
+      
+   
+        <div class="col-sm-2 col-md-2">
+             <%= image_tag @user.avatar_url(:thumb) if @user.avatar? %>
+        </div>
+        <div class="col-sm-4 col-md-4">
+            <blockquote>
+                <p><%= @user.nick.upcase %></p> <small><cite title="Source Title">Gotham, United Kingdom  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
+            </blockquote>
+            <p> <i class="glyphicon glyphicon-envelope"></i> <%= @user.email %>
+                <br /> <i class="glyphicon glyphicon-globe"></i> www.website.com
+            </p>
+        </div>
+</div>
+      
+

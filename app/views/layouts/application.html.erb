@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Notice Board</title>
+      <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+      <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+      <%= csrf_meta_tags %>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+                <div class="navbar-header">               
+                  <%= link_to "Notice Board", root_url, :class => "navbar-brand" %>
+                </div>
+
+                <div class="navbar-collapse collapse logout_menu">
+                  <ul class="nav navbar-nav navbar-right">
+                    <% if current_user %>
+                        <li class="dropdown">
+                          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+                            <i class="glyphicon glyphicon-user"></i> <%= current_user.nick %> <span class="caret"></span></a>
+                          <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                            <li><%= link_to current_user do %>
+                                    <i class="glyphicon glyphicon-home"> Account</i>
+                                <% end %>
+                            </li>  
+                            <li><%= link_to logout_path do %>
+                                    <i class="glyphicon glyphicon-off"> Logout</i>
+                                <% end %>
+                            </li>  
+                          </ul>
+                        </li>
+                    <% else %>
+                        <%= link_to "Log in", login_path %> or
+                        <%= link_to "Sign up", signup_path %>
+
+                    <% end %>
+                  </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+
+
+         <% flash.each do |name, msg| %>
+          <%= content_tag :div, :class => "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable" do %>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <%= msg %>
+          <% end %>
+        <% end %>
+
+       <div class="row margin_top"> 
+
+            <div class="col-md-3 menu">
+                <h4>State</h4>
+                   <div class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_state.name.upcase %> <b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <% @states.each do |state| %>
+                        <li><%= link_to state.name.upcase, state %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+
+                <hr>
+                </br>
+                <h4>Categories</h4>
+                <div class="list-group">
+                    <% @categories.each do |category| %>
+                        <%= link_to category.name.upcase, category, :class => "list-group-item" %>
+                    <% end %>
+                </div>
+            </div>
+
+
+         <%= yield %>
+
+         <% if current_user %>
+             <div class="col-md-2 pull-right menu">  
+                  <h4><i class="glyphicon glyphicon-wrench"></i> My Tools</h4>
+                    <hr>  
+                        <ul class="nav nav-pills nav-stacked">
+                          <li class="nav-header"></li>
+                          <% if current_user.is_admin? %>
+                              <li><%= link_to current_user do %>
+                                    <span class="glyphicon glyphicon-dashboard"></span>
+                                    Admin panel
+                                  <% end %>
+                              </li>
+                          <% else %>
+                              <li><%= link_to current_user do %>
+                                    <span class="glyphicon glyphicon-home"></span>
+                                    My account
+                                  <% end %>
+                              </li>
+                           <% end %>
+                          <li><%= link_to new_order_path do %>
+                                <span class="glyphicon glyphicon-plus"></span>
+                                New note
+                              <% end %>
+                          </li>
+                          <li><%= link_to orders_path do %>
+                                <span class="glyphicon glyphicon-th"></span>
+                                My notes
+                              <% end %>
+                          </li>
+                          <li><%= link_to category_path(first_category) do %>
+                                <span class="glyphicon glyphicon-list"></span>
+                                Categories
+                              <% end %>
+                          </li>
+                          <li><%= link_to edit_user_path(current_user) do %>
+                                <span class="glyphicon glyphicon-cog"></span>
+                                Settings
+                              <% end %>
+                          </li>
+                          <li><%= link_to current_user, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                <span class="glyphicon glyphicon-trash"></span>
+                                Remove account
+                              <% end %>
+                          </li>
+                          <li><%= link_to logout_path do %>
+                                <span class="glyphicon glyphicon-off"></span>
+                                  Logout
+                              <% end %>
+                          </li>
+                                 
+                        </ul>
+                           <p><%= link_to new_order_path, :class => 'btn btn-primary btn-lg' do %>
+                                <span class="glyphicon glyphicon-plus"></span>
+                                New note
+                              <% end %> 
+                           </p>
+                    <hr>
+            </div>
+          <% end %>
+       </div>
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+
+        <hr>
+
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy;<a href="http://wislakrakow.com/">Tomasz Wiśniewski</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+</body>
+
+</html>
